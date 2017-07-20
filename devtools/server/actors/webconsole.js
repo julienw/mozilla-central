@@ -15,6 +15,7 @@ const { ThreadActor } = require("devtools/server/actors/script");
 const { ObjectActor, LongStringActor, createValueGrip, stringIsLong } = require("devtools/server/actors/object");
 const DevToolsUtils = require("devtools/shared/DevToolsUtils");
 const ErrorDocs = require("devtools/server/actors/errordocs");
+const { StructuredCloneHolder } = Cu.import("resource://gre/modules/Services.jsm", {});
 
 loader.lazyRequireGetter(this, "NetworkMonitor", "devtools/shared/webconsole/network-monitor", true);
 loader.lazyRequireGetter(this, "NetworkMonitorChild", "devtools/shared/webconsole/network-monitor", true);
@@ -438,6 +439,11 @@ WebConsoleActor.prototype =
    *         Debuggee value for |value|.
    */
   makeDebuggeeValue: function (value, useObjectGlobal) {
+    if (value instanceof StructuredCloneHolder) {
+      // When logging an object from an OOP extension we use a StructuredCloneHolder
+      // Let's unwrap it.
+      value = value.deserialize(this.window);
+    }
     if (useObjectGlobal && typeof value == "object") {
       try {
         let global = Cu.getGlobalForObject(value);
