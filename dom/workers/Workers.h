@@ -374,9 +374,6 @@ public:
   PostTask(WorkerTask* aTask);
 };
 
-// Random unique constant to facilitate JSPrincipal debugging
-const uint32_t kJSPrincipalsDebugToken = 0x7e2df9d2;
-
 bool
 IsWorkerGlobal(JSObject* global);
 

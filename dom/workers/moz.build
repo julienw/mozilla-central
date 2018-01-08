@@ -26,6 +26,7 @@ EXPORTS.mozilla.dom += [
 ]
 
 EXPORTS.mozilla.dom.workers += [
+    'Principal.h',
     'RuntimeService.h',
     'ServiceWorkerInfo.h',
     'ServiceWorkerManager.h',

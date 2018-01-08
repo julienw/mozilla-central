@@ -8,6 +8,8 @@
 #define nsJSPrincipals_h__
 #include "jsapi.h"
 #include "nsIPrincipal.h"
+// for mozilla::dom::workers::WorkerPrincipal::DEBUG_TOKEN
+#include "mozilla/dom/workers/Principal.h"
 
 class nsJSPrincipals : public nsIPrincipal, public JSPrincipals
 {
@@ -33,12 +35,16 @@ public:
    */
   static nsJSPrincipals* get(JSPrincipals *principals) {
     nsJSPrincipals *self = static_cast<nsJSPrincipals *>(principals);
-    MOZ_ASSERT_IF(self, self->debugToken == DEBUG_TOKEN);
+    MOZ_ASSERT_IF(self,
+                  self->debugToken == DEBUG_TOKEN
+                  || self->debugToken == mozilla::dom::workers::WorkerPrincipal::DEBUG_TOKEN);
     return self;
   }
   static nsJSPrincipals* get(nsIPrincipal *principal) {
     nsJSPrincipals *self = static_cast<nsJSPrincipals *>(principal);
-    MOZ_ASSERT_IF(self, self->debugToken == DEBUG_TOKEN);
+    MOZ_ASSERT_IF(self,
+                  self->debugToken == DEBUG_TOKEN
+                  || self->debugToken == mozilla::dom::workers::WorkerPrincipal::DEBUG_TOKEN);
     return self;
   }
 

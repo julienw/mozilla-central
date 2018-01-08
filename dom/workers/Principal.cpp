@@ -11,14 +11,6 @@
 
 BEGIN_WORKERS_NAMESPACE
 
-struct WorkerPrincipal final : public JSPrincipals
-{
-  bool write(JSContext* aCx, JSStructuredCloneWriter* aWriter) override {
-    MOZ_CRASH("WorkerPrincipal::write not implemented");
-    return false;
-  }
-};
-
 JSPrincipals*
 GetWorkerPrincipal()
 {
@@ -35,7 +27,7 @@ GetWorkerPrincipal()
     --sPrincipal.refcount;
   } else {
 #ifdef DEBUG
-    sPrincipal.debugToken = kJSPrincipalsDebugToken;
+    sPrincipal.debugToken = WorkerPrincipal::DEBUG_TOKEN;
 #endif
   }
 

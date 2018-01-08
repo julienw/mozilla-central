@@ -7,9 +7,21 @@
 #ifndef mozilla_dom_workers_principal_h__
 #define mozilla_dom_workers_principal_h__
 
-#include "Workers.h"
+#include "jsapi.h"
+#include "mozilla/Assertions.h"
 
-BEGIN_WORKERS_NAMESPACE
+namespace mozilla { namespace dom { namespace workers {
+
+struct WorkerPrincipal final : public JSPrincipals
+{
+  bool write(JSContext* aCx, JSStructuredCloneWriter* aWriter) override {
+    MOZ_CRASH("WorkerPrincipal::write not implemented");
+    return false;
+  }
+
+  // Random unique constant to facilitate JSPrincipal debugging
+  static const uint32_t DEBUG_TOKEN = 0x7e2df9d2;
+};
 
 JSPrincipals*
 GetWorkerPrincipal();
@@ -17,6 +29,6 @@ GetWorkerPrincipal();
 void
 DestroyWorkerPrincipals(JSPrincipals* aPrincipals);
 
-END_WORKERS_NAMESPACE
+} /* namespace workers */ } /* namespace dom */ } /* namespace mozilla */
 
 #endif /* mozilla_dom_workers_principal_h__ */
