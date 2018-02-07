@@ -370,6 +370,7 @@
 .ruleview-ruleclose {
   cursor: text;
   padding-right: 20px;
+  clear: left;
 }
 
 .ruleview-propertylist {
@@ -558,7 +559,7 @@
 
 .ruleview-property {
   border-left: 3px solid transparent;
-  clear: right;
+  clear: both;
   padding-left: 28px;
 }
 
