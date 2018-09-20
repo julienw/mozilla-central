@@ -150,6 +150,7 @@ var AppManager = exports.AppManager = {
       this._listTabsResponse = null;
       this.deviceFront = null;
       this.preferenceFront = null;
+      this.perfFront = null;
     } else {
       const response = await this.connection.client.listTabs();
       // RootClient.getRoot request was introduced in FF59, but RootClient.getFront
@@ -161,6 +162,7 @@ var AppManager = exports.AppManager = {
       this._listTabsResponse = response;
       this.deviceFront = await this.connection.client.mainRoot.getFront("device");
       this.preferenceFront = await this.connection.client.mainRoot.getFront("preference");
+      this.perfFront = await this.connection.client.mainRoot.getFront("perf");
       this._recordRuntimeInfo();
       this.update("runtime-global-actors");
     }
